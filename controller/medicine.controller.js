@@ -8,10 +8,11 @@ router.use(express.urlencoded({ extended: true }));
 
 router.post('/addMedicine', async (req, res) => {
     try {
+        const salts=req.body.salt.split(',').map(salt=>salt.trim().toLowerCase());
         const medicine = new Medicine({
             name: req.body.name,
             price: req.body.price,
-            salt: req.body.salt,
+            salt: salts,
             manufacturer: req.body.manufacturer,
             type: req.body.type,
             quantity: req.body.quantity,
@@ -99,6 +100,23 @@ router.get('/getMedicine/Manufacturer/:manufacturer', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+
+router.get('/getMedicine/salt/:salt',async(req,res)=>{
+    try{
+        const salts=req.params.salts.split(',').map(salt=>salt.trim().toLowerCase());
+        if(salts.lenght===0 || salt.includes('')){
+            return res.status(400).json({message:'Please enter a valid salt'});
+        }
+        const medicine=await Medicine.find({salt:{$in:salts}});
+        if(medicine.length===0){
+            return res.status(404).json({message:'Medicine not found, recheck the salts'});
+        }
+        res.status(200).json(medicine);
+    }catch(err){
+        res.status(500).json({message:'Internal server error'});
+    }
+})
 
 router.put('/updateMedicine/quantity/:name', async (req, res) => {
     try {
