@@ -35,7 +35,35 @@ const medicineSchema=new mongoose.Schema({
     expiry:{
       type:Date,
       required:true
-    }
+    },
+    createdAt:{
+      type:Date,
+      default:Date.now
+    },
+    updatedAt:{
+      type:Date,
+      default:Date.now
+    },
+    isSellable:{
+      type:Boolean,
+      default:true
+    },
+    isExpired:{
+      type:Boolean,
+      default:false
+    },
+    sellCount:{
+      type:Number,
+      default:0
+    },
+    isSold:{
+      type:Boolean,
+      default:false
+    },
+    seller:{
+      type:String,
+      default:''
+    },
 })
 
 medicineSchema.index({ name: 1 });

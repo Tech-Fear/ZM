@@ -9,6 +9,10 @@ router.use(express.urlencoded({ extended: true }));
 router.post('/addMedicine', async (req, res) => {
     try {
         const salts=req.body.salt.split(',').map(salt=>salt.trim().toLowerCase());
+        if(req.body.expiry<new Date()) return res.status(400).json({message:'Expired Medicine cannot be inserted. Please check the expiry date'})
+        if (salts.length === 0 || salts.includes('')) {
+            return res.status(400).json({ message: 'Please enter a valid salt' });
+        }
         const medicine = new Medicine({
             name: req.body.name,
             price: req.body.price,
@@ -18,7 +22,15 @@ router.post('/addMedicine', async (req, res) => {
             quantity: req.body.quantity,
             description: req.body.description,
             category: req.body.category,
-            expiry: req.body.expiry
+            expiry: req.body.expiry,
+            isSellable: req.body.isSellable,
+            isExpired: req.body.isExpired,
+            sellCount: req.body.sellCount,
+            isSold: req.body.isSold,
+
+            
+
+
         });
         await medicine.save();
         res.status(201).json({ message: 'Medicine added successfully' });
