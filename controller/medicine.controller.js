@@ -27,10 +27,6 @@ router.post('/addMedicine', async (req, res) => {
             isExpired: req.body.isExpired,
             sellCount: req.body.sellCount,
             isSold: req.body.isSold,
-
-            
-
-
         });
         await medicine.save();
         res.status(201).json({ message: 'Medicine added successfully' });
