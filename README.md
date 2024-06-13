@@ -1,6 +1,6 @@
 # Medicine Inventory API
 
-This is a simple API for managing a medicine inventory, built with Node.js, Express, and MongoDB.
+This is a RESTful API for managing a medicine inventory system, built using Node.js, Express, and MongoDB. It allows CRUD operations for medicines, with seller-level management and authentication.
 
 ## Table of Contents
 
@@ -11,47 +11,46 @@ This is a simple API for managing a medicine inventory, built with Node.js, Expr
 - [API Endpoints](#api-endpoints)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-## Prerequisites
+### Prerequisites
 
-Make sure you have the following software installed on your machine:
+Ensure you have the following software installed on your machine:
 
 - [Node.js](https://nodejs.org/en/download/)
 - [MongoDB](https://docs.mongodb.com/manual/installation/)
 
-## Installation
+### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/tech-fear/ZM.git
+    git clone https://github.com/Tech-Fear/ZM.git
     cd ZM
     ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
     ```bash
     npm install
     ```
 
-3. Create a `.env` file in the root directory and add your MongoDB connection string:
+3. **Create a `.env` file in the root directory and add your MongoDB connection string:**
 
     ```env
     MONGODB_URI=mongodb://localhost:27017/medicineDB
     ```
 
-4. Start the MongoDB server (if not already running):
+4. **Start the MongoDB server (if not already running):**
 
     ```bash
     mongod
     ```
 
-5. Start the application:
+5. **Start the application:**
 
     ```bash
     npm start
@@ -61,7 +60,7 @@ Make sure you have the following software installed on your machine:
 
 ## Usage
 
-Use a tool like [Postman](https://www.postman.com/) or [curl](https://curl.se/) to interact with the API endpoints.
+Use tools like [Postman](https://www.postman.com/) or [curl](https://curl.se/) to interact with the API endpoints.
 
 ## API Endpoints
 
@@ -195,10 +194,19 @@ Use a tool like [Postman](https://www.postman.com/) or [curl](https://curl.se/) 
 ```bash
 .
 ├── controllers
-│   └── medicine.controller.js
+│   ├── medicine.controller.js
+│   └── sellerLevel.controller.js
 ├── models
-│   └── medicine.js
+│   ├── medicine.js
+│   ├── medicineSellerManageable.js
+│   └── seller.js
 ├── routes
-│   └── medicine.routes.js
+│   ├── medicine.routes.js
+│   └── seller.routes.js
 ├── app.js
 └── package.json
+```
+
+### Contributing
+
+Feel free to fork the repository, create pull requests, and suggest improvements. Your contributions are always welcome!
