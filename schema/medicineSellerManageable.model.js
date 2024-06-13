@@ -5,6 +5,10 @@ const medicineSellerInfoSchema = new mongoose.Schema({
         ref: 'MedicineDetails',
         required: true
     },
+    price: {
+        type: Number,
+        required: true
+    },
     quantity: {
         type: Number,
         required: true
