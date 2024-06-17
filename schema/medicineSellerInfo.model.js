@@ -5,11 +5,11 @@ const medicineSellerInfoSchema = new mongoose.Schema({
         ref: 'MedicineDetails',
         required: true
     },
-    // sellerId:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref: 'Seller',
-    //     required:true,
-    // },
+    sellerId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Seller',
+        required:true,
+    },
     price: {
         type: Number,
         required: true

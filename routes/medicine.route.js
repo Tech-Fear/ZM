@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const medicineController = require('../controller/medicine.controller.js');
-const sellerLevelController = require('../controller/sellerLevel.controller.js');
+const {addMedicine,getMedicines,getMByName,getByCategory,getByType,getByManufacturer,getBySalt,deleteByName} = require('../controller/medicine.controller.js');
 
-router.use('/medicine', medicineController);
-router.use('/sellerLevel', sellerLevelController);
+router.post('/addMedicine', addMedicine);
+router.get('/getMedicines', getMedicines);
+router.get('/getMedicineName/:name', getMByName);
+router.get('/getByCategory/:category', getByCategory);
+router.get('/getByType/:type', getByType);
+router.get('/getByManufacturer/:manufacturer', getByManufacturer);
+router.get('/getBySalt/:salt', getBySalt);
+router.delete('/deleteByName/:name', deleteByName);
+
 module.exports = router;

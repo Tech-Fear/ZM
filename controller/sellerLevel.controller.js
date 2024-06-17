@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const MedicineDetails = require('../schema/medicine.model.js');
-const MedicineSellerInfo = require('../schema/medicineSellerManageable.model.js');
+const MedicineDetails = require('../schema/medicineDetails.model.js');
+const MedicineSellerInfo = require('../schema/medicineSellerInfo.model.js');
 const Seller = require('../schema/seller.model.js')
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -29,9 +29,20 @@ const authenticateSeller = async (req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+// Add medicine at seller level
+
+// const addMedicine=(authenticateSeller, async (req, res) => {
+//   try{
+//     const {name,price,quantity,expiry}=req.body;
+//     const medicine=await MedicineDetails.findOne({name});
+//   }
+// })
+
+
+
 
 // Get expired medicines for a specific seller
-router.get('/getExpiredMedicine', authenticateSeller, async (req, res) => {
+const getExpiredMedicine=(authenticateSeller, async (req, res) => {
   try {
     const medicines = await MedicineSellerInfo.find({ seller: req.sellerId, isExpired: true }).sort({ expiry: 1 });
     if (medicines.length === 0) return res.status(404).json({ message: 'No expired medicines found' });
@@ -42,7 +53,7 @@ router.get('/getExpiredMedicine', authenticateSeller, async (req, res) => {
 });
 
 // Update Price of Medicine at Seller Level
-router.put('/updateMedicine/price/:name', authenticateSeller, async (req, res) => {
+const updateMedicineByName=(authenticateSeller, async (req, res) => {
   try {
     const name = req.params.name.trim().toLowerCase();
     if (name === '') {
@@ -68,7 +79,7 @@ router.put('/updateMedicine/price/:name', authenticateSeller, async (req, res) =
 });
 
 // Update the expiry status of medicines for a specific seller
-router.put('/updateMedicineExpiryStatus', authenticateSeller, async (req, res) => {
+const UpdateMedicineExpiryStatus=(authenticateSeller, async (req, res) => {
   try {
     const expiredMedicines = await MedicineSellerInfo.find({ seller: req.sellerId, expiry: { $lt: new Date() } });
     if (expiredMedicines.length === 0) return res.status(404).json({ message: 'No expired medicines found' });
@@ -87,7 +98,7 @@ router.put('/updateMedicineExpiryStatus', authenticateSeller, async (req, res) =
 });
 
 // Delete Medicine at Seller Level
-router.delete('/deleteMedicine/:name', authenticateSeller, async (req, res) => {
+const delteMedicine=( authenticateSeller, async (req, res) => {
   try {
     const name = req.params.name.trim().toLowerCase();
     if (name === '') {
@@ -111,7 +122,7 @@ router.delete('/deleteMedicine/:name', authenticateSeller, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = {getExpiredMedicine,updateMedicineByName,UpdateMedicineExpiryStatus,delteMedicine};
 
 
 // const express = require('express');

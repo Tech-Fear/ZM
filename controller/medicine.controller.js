@@ -7,8 +7,25 @@ const MedicineSellerInfo = require('../schema/medicineSellerInfo.model.js');
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+//jwt decode to get seller id
+function func(){
+    const token = req.cookies.jwt;
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided. Unauthorized' });
+        }
+
+        let sellerId;
+        try {
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            sellerId = decodedToken.userId;
+        } catch (err) {
+            return res.status(401).json({ message: 'Invalid token. Unauthorized' });
+        }
+    return sellerId;
+}
+
 // Add a new medicine and its seller information
-router.post('/addMedicine', async (req, res) => {
+const addMedicine=async (req, res) => {
     try {
         const salts = req.body.salt.split(',').map(salt => salt.trim().toLowerCase());
         if (req.body.expiry < new Date()) {
@@ -34,6 +51,7 @@ router.post('/addMedicine', async (req, res) => {
         });
         await medicine.save();
         }
+        const sellerId=func();
         if(medicineExists){
                 medicine=await MedicineDetails.findOne({
                 name:req.body.name.trim().toLowerCase(),
@@ -42,7 +60,7 @@ router.post('/addMedicine', async (req, res) => {
         }
         const existingSellerMedicine = new MedicineSellerInfo.findOne({
             medicineId:medicine._id,
-            seller:req.body.seller,
+            seller:sellerId,
             expiry:req.body.expiry
         })
         if(existingSellerMedicine){
@@ -50,6 +68,7 @@ router.post('/addMedicine', async (req, res) => {
         }
         const medicineSellerInfo = new MedicineSellerInfo({
             medicineId: medicine._id,
+            sellerId:sellerId,
             price: req.body.price,
             quantity: req.body.quantity,
             expiry: req.body.expiry,
@@ -66,10 +85,10 @@ router.post('/addMedicine', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+}
 
 // Get all medicines
-router.get('/getMedicine', async (req, res) => {
+const getMedicines=async (req, res) => {
     try {
         const medicines = await MedicineDetails.find({}).sort({ name: 1 });
         if (medicines.length === 0) {
@@ -79,10 +98,10 @@ router.get('/getMedicine', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
 // Get medicine by name
-router.get('/getMedicine/Name/:name', async (req, res) => {
+const getMByName=async (req, res) => {
     try {
         const name = req.params.name.trim().toLowerCase();
         if (name === '') {
@@ -96,10 +115,10 @@ router.get('/getMedicine/Name/:name', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
 // Get medicine by category
-router.get('/getMedicine/Category/:category', async (req, res) => {
+const getByCategory= async (req, res) => {
     try {
         const category = req.params.category.trim().toLowerCase();
         if (category === '') {
@@ -113,10 +132,10 @@ router.get('/getMedicine/Category/:category', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
 // Get medicine by type
-router.get('/getMedicine/Type/:type', async (req, res) => {
+const getByType=async (req, res) => {
     try {
         const type = req.params.type.trim().toLowerCase();
         if (type === '') {
@@ -130,10 +149,10 @@ router.get('/getMedicine/Type/:type', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
 // Get medicine by manufacturer
-router.get('/getMedicine/Manufacturer/:manufacturer', async (req, res) => {
+const getByManufacturer=async (req, res) => {
     try {
         const manufacturer = req.params.manufacturer.trim().toLowerCase();
         if (manufacturer === '') {
@@ -147,10 +166,10 @@ router.get('/getMedicine/Manufacturer/:manufacturer', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
 // Get medicine by salt
-router.get('/getMedicine/salt/:salt', async (req, res) => {
+const getBySalt=async (req, res) => {
     try {
         const salts = req.params.salt.split(',').map(salt => salt.trim().toLowerCase());
         if (salts.length === 0 || salts.includes('')) {
@@ -164,29 +183,10 @@ router.get('/getMedicine/salt/:salt', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
-
-// Update medicine quantity by name
-router.put('/updateMedicine/quantity/:name', async (req, res) => {
-    try {
-        const name = req.params.name.trim().toLowerCase();
-        if (name === '') {
-            return res.status(400).json({ message: 'Please enter a valid name' });
-        }
-        const medicine = await MedicineSellerInfo.findOne({ medicineId: (await MedicineDetails.findOne({ name }))._id });
-        if (!medicine) {
-            return res.status(404).json({ message: 'Medicine not found, recheck the name' });
-        }
-        medicine.quantity = req.body.quantity;
-        await medicine.save();
-        res.status(200).json({ message: 'Quantity updated successfully' });
-    } catch (err) {
-        res.status(500).json({ message: 'Internal server error', error: err.message });
-    }
-});
+};
 
 // Delete medicine by name
-router.delete('/deleteMedicine/:name', async (req, res) => {
+const deleteByName= async (req, res) => {
     try {
         const name = req.params.name.trim().toLowerCase();
         if (name === '') {
@@ -202,9 +202,9 @@ router.delete('/deleteMedicine/:name', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-});
+};
 
-module.exports = router;
+module.exports = {addMedicine,getMedicines,getMByName,getByCategory,getByType,getByManufacturer,getBySalt,deleteByName};
 
 
 

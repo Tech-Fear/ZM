@@ -31,8 +31,8 @@ const sellerSchema = new mongoose.Schema({
   }
 });
 
-sellerSchema.index({username})
-sellerSchema.index({email})
+sellerSchema.index({username:1})
+sellerSchema.index({email:1})
 
 const Seller = mongoose.model('Seller', sellerSchema);
 
