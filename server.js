@@ -13,7 +13,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use('/api',medicineRoute);
+app.use('/api/medicine',medicineRoute);
 app.use('/api/auth',authRoutes);
 
 
@@ -21,7 +21,7 @@ PORT= process.env.PORT || 5000;
 app.listen(PORT,async ()=>{
   try{
   await connectDB();
-  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log(`Server is running on port ${process.env.PORT}`.bgGreen.white);
   }catch(err){
     console.error('Server failed to start:',err.message.bgRed);
   }

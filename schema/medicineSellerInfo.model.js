@@ -38,11 +38,11 @@ const medicineSellerInfoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    seller: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Seller',
-        required:true
-    },
+    // seller: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref:'Seller',
+    //     required:true
+    // },
     createdAt: {
         type: Date,
         default: Date.now

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const jwt=require('jsonwebtoken');
 const MedicineDetails = require('../schema/medicineDetails.model.js');
 const MedicineSellerInfo = require('../schema/medicineSellerInfo.model.js');
 
@@ -8,7 +9,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 //jwt decode to get seller id
-function func(){
+function func(req){
     const token = req.cookies.jwt;
         if (!token) {
             return res.status(401).json({ message: 'No token provided. Unauthorized' });
@@ -51,7 +52,7 @@ const addMedicine=async (req, res) => {
         });
         await medicine.save();
         }
-        const sellerId=func();
+        // const sellerId=func(req);
         if(medicineExists){
                 medicine=await MedicineDetails.findOne({
                 name:req.body.name.trim().toLowerCase(),
@@ -83,7 +84,7 @@ const addMedicine=async (req, res) => {
         res.status(201).json({ message: 'Medicine added successfully' });
 
     } catch (err) {
-        res.status(500).json({ message: 'Internal server error', error: err.message });
+        res.status(500).json({ message: 'Internal server error', error: err.message});
     }
 }
 

@@ -38,9 +38,6 @@ const authenticateSeller = async (req, res, next) => {
 //   }
 // })
 
-
-
-
 // Get expired medicines for a specific seller
 const getExpiredMedicine=(authenticateSeller, async (req, res) => {
   try {

@@ -13,6 +13,15 @@ function validateEmail(email) {
   return re.test(email);
 }
 
+const getSellers=async(req,res)=>{
+  try{
+    const sellers = await User.find();
+    if(sellers.length===0) return res.status(404).json({message:'No Sellers found'});
+    res.status(200).json(sellers);
+  }catch(err){
+    res.status(500).json({message:'Internal server error',error:err.message});
+  }
+}
 const signup = async (req, res) => {
   try {
     let { fullname, username, email, password, confirmPassword } = req.body;
@@ -97,4 +106,4 @@ const logout = (req, res) => {
   }
 }
 
-module.exports = { signup, login, logout };
+module.exports = { signup, login, logout, getSellers };
