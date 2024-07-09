@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use('/api/medicine',medicineRoute);
 app.use('/api/auth',authRoutes);
-app.use('/api/cart',cartRoutes)
+app.use('/cart', cartRoutes);
 
 
 PORT= process.env.PORT || 5000;
