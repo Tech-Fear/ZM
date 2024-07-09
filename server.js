@@ -7,6 +7,7 @@ const colors=require('colors')
 const medicineRoute=require('./routes/medicine.route');
 const authRoutes=require('./routes/auth.routes');
 const connectDB=require('./config/db.connect.js')
+const cartRoutes=require('./routes/cart.routes.js')
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use('/api/medicine',medicineRoute);
 app.use('/api/auth',authRoutes);
+app.use('/api/cart',cartRoutes)
 
 
 PORT= process.env.PORT || 5000;
