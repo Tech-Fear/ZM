@@ -1,5 +1,5 @@
 const express = require('express');
-const { signup, login, logout, getSellers } = require('../controller/SellerAuth.controller.js');
+const { signup, login, logout, getSellers } = require('../controller/seller/SellerAuth.controller.js');
 
 const router = express.Router();
 
