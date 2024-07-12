@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {addMedicine,getMedicines,getMByName,getByCategory,getByType,getByManufacturer,getBySalt,deleteByName} = require('../controller/medicine.controller.js');
+const {addMedicine,getMedicines,getMByName,getByCategory,getByType,getByManufacturer,getBySalt,deleteByName} = require('../controller/Medicine/medicine.controller.js');
 
 router.post('/addMedicine', addMedicine);
 router.get('/getMedicines', getMedicines);

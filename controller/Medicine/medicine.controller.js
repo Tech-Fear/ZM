@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const jwt=require('jsonwebtoken');
-const MedicineDetails = require('../schema/medicineDetails.model.js');
-const MedicineSellerInfo = require('../schema/medicineSellerInfo.model.js');
+const MedicineDetails = require('../../schema/medicineDetails.model.js');
+const MedicineSellerInfo = require('../../schema/medicineSellerInfo.model.js');
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

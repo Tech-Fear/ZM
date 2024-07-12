@@ -1,6 +1,6 @@
 const express=  require('express');
 const router=express.Router();
-const {getExpiredMedicine,updateMedicineByName,UpdateMedicineExpiryStatus,delteMedicine}=require('../controller/sellerLevel.controller.js');
+const {getExpiredMedicine,updateMedicineByName,UpdateMedicineExpiryStatus,delteMedicine}=require('../controller/seller/sellerLevel.controller.js');
 
 router.get('/getExpiredMedicine',getExpiredMedicine);
 router.put('/updateMedicine/price/:name',updateMedicineByName);

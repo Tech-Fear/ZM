@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../schema/seller.model.js');
-const generateTokenAndSetCookie = require('../utils/generateToken.js');
+const User = require('../../schema/seller.model.js');
+const generateTokenAndSetCookie = require('../../utils/generateToken.js');
 
 function validatePassword(password) {
   const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&]).{8,}$/;

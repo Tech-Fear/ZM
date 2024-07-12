@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {addToCart,deleteFromCart,viewCart,updateQuantity}=require('../controller/cart.controller.js');
+const {addToCart,deleteFromCart,viewCart,updateQuantity}=require('../controller/User/cart.controller.js');
 
 router.post('/addToCart',addToCart);
 router.delete('/deleteFromCart',deleteFromCart);

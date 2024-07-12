@@ -1,6 +1,6 @@
-const Cart = require('../schema/cartDetails.model.js');
-const Medicine = require('../schema/medicineDetails.model.js');
-const Seller = require('../schema/medicineSellerInfo.model.js');
+const Cart = require('../../schema/cartDetails.model.js');
+const Medicine = require('../../schema/medicineDetails.model.js');
+const Seller = require('../../schema/medicineSellerInfo.model.js');
 
 const addToCart = async (req, res) => {
   try {
